@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Game Code</title>
+<style type="text/css">
+ html,
+body {
+	height: 100%;
+	color: white;
+}
+
+body {
+	margin: 0;
+	background: #1A1A1D;
+	font-family: sans-serif;
+	font-weight: 100;
+}
+
+.container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+table {
+	width: 1100px;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+th {
+	padding: 15px;
+	background-color: #C3073F;
+	color: #fff;
+}
+
+td{
+	padding: 15px;
+	background-color: #6F2232;
+	color: #fff;
+}
+
+th {
+	text-align: left;
+}
+
+h1{
+	text-align: center;
+}
+</style>
+<script src="jquery-3.5.1.js"></script>
+<script type="text/javascript">
+	function loadGameInfo(){
+		$.get("Gamedo", function(result, status){
+			console.log(result.data)
+			$('#tbl').append("<tr><td>"+result.data.gameName+"</td><td>"+result.data.gameID+"</td></tr>")	
+		});
+	}
+	function checkQuestion(){
+		setInterval("getCurrentQuestion()",2000)
+		
+	}
+		
+		function getCurrentQuestion(){
+			$.get("gameholder", function(result, status){
+				console.log(result)
+				console.log(result.questionID)
+				$("#current_num").text(result.description)
+				if(result.questionID ==1){
+					window.location.assign("host.html")
+				}
+			});
+		}
+	
+</script>
+</head>
+<body onload="loadGameInfo(); checkQuestion();">
+<br><br><br>
+<table id="tbl" border="1" style="border:1px solid black;margin-left:auto;margin-right:auto;">
+	<thead>
+	<th>Game</th>
+	<th>Code</th>
+	</thead>
+	</table>
+	<br><br><br>
+	<h1>WELCOME TO TRIVIA NIGHT!</h1>
+</body>
+</html>

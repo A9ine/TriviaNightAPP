@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <title>Welcome</title>
+    <script src="jquery-3.5.1.js"></script>
+	<script type="text/javascript">
+	function hostGame() {
+		window.location.replace('pastyearsquestions.html')
+	}
+	</script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <body>
+        <div class="center">
+            <button type="button" id="verticalspacewelcome" class="color2 welcomepagebutton horizontalspace">This years quiz</button>
+            <button type="button" onclick="hostGame()" id="hostgame" class="color3 welcomepagebutton">View past years questions</button>
+        </div>
+    </body>
+    <script>
+    	$('#verticalspacewelcome').click(function() 
+        {
+        	window.location.replace('Welcome.html');
+        });
+    </script>
+</html>

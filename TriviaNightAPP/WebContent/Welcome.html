@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <title>Welcome</title>
+    <script src="jquery-3.5.1.js"></script>
+	<script type="text/javascript">
+	function hostGame() {
+		if(confirm("Do you want to start a game?")) {
+			$.get("Validation",function(data, status){
+				console.log(data);
+				window.location.replace(data);
+			});
+		}
+	}
+	</script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <body>
+        <div class="center">
+            <button type="button" id="verticalspacewelcome" class="color2 welcomepagebutton horizontalspace">Edit Questions</button>
+            <button type="button" onclick="hostGame()" id="hostgame" class="color3 welcomepagebutton">Host Game</button>
+        </div>
+    </body>
+    <script>
+    	$('#verticalspacewelcome').click(function() 
+        {
+        	window.location.replace('Question.html');
+        });
+    </script>
+</html>

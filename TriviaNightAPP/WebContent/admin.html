@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<style type="text/css">
+ html,
+body {
+	height: 100%;
+	color: white;
+}
+body {
+	margin: 0;
+	background: #1A1A1D;
+	font-family: sans-serif;
+	font-weight: 100;
+	text-align: center;
+}
+
+h1{
+	font-size:50px;
+}
+
+#current_num{
+	font-size:40px;
+
+}
+table {
+	width: 1100px;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+	
+}
+
+th {
+	padding: 15px;
+	background-color: #C3073F;
+	color: #fff;
+}
+
+td{
+	padding: 15px;
+	background-color: #6F2232;
+	color: #fff;
+}
+
+th {
+	text-align: left;
+}
+
+thead {
+	th {
+		background-color: #55608f;
+	}
+}
+
+ input[type=submit]{
+	background-color: #950740; 
+  	border: none;
+  	color: white;
+ 	text-align: center;
+  	text-decoration: none;
+  	font-size: 25px;
+  	border: 1px solid black;
+}
+
+input[type=submit]:hover{
+	transition-duration: 0.2s;
+	background-color: #C3073F;
+  	color: white;
+}
+</style>
+<head>
+<meta charset="ISO-8859-1">
+<title>Admin</title>
+<script src="jquery-3.5.1.js"></script>
+<script type="text/javascript">
+
+function getCurrentQuestion(){
+	$.get("gameholder", function(result, status){
+		console.log(result)
+		console.log(result.questionID)
+		$("#current_num").text(result.question)
+	});
+}
+function display_c(){
+	var refresh=1000; // Refresh rate in milli seconds
+	mytime=setTimeout('display_ct()',refresh)
+	}
+	
+function display_ct() {
+	var x = new Date()
+	document.getElementById('ct').innerHTML = x;
+	display_c();
+	 }
+	 
+	function loadTeamRanking(){
+		$.get("loadTeam", function(result, status){
+			var q=1
+			console.log(result.data)
+			
+			var  team = result.data[0]
+			var score = result.data[1]
+			for(i=team.length-1;i>=0;i--)
+			{
+				console.log(result.data[i])
+				$('#tbl').append("<tr><td>"+q+"</td><td>"+team[i]+"</td><td>"+score[i]+"</td></tr>");
+				q++
+			}
+		});
+	}
+</script>
+</head>
+<body  onload="loadTeamRanking();getCurrentQuestion(); display_ct();">
+	<form action="Admindo" method="get">
+		<input type="submit" name="action" value="Next Question">
+		<input type="submit" name="action" value="Show Explaination">
+		<input type="submit" name="action" value="End Game">
+	</form>
+	<h1>Current Question:</h1>
+	<div>
+		<span  id="current_num">No question currently being displayed</span>
+	</div>
+	<br><br><br><br>
+	<span id='ct' ></span>
+	<br><br><br><br><br><br>
+	<div id="userListDiv">
+		<table id="tbl" border="1" align="center">
+		<thead>
+		<th>Ranking</th>
+		<th>Team</th>
+		<th>Points</th>
+		</thead>
+		</table>
+	</div>
+</body>
+</html>

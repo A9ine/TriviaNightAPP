@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Trivia Night</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <body>
+            <h1 id="title"><b>TRIVIA NIGHT</b></h1>
+            <br>
+            <button type="button" id="button1" class="button color2 stack titlepagebutton verticalspace">Join Game</button>
+            <button type="button" id="button2" class="button color1 stack titlepagebutton verticalspace">Admin</button>
+            <button type="button" id="button3" class="button color3 stack titlepagebutton">Login</button>
+        </body>
+        <script src="jquery-3.5.1.js"></script>
+        <script>
+            $('#button1').click(function() 
+            {
+                window.location.replace('GameCode.html');
+            });
+            $('#button2').click(function() 
+            {
+            	window.location.replace('AdminLogin.html');
+            });
+            $('#button3').click(function() 
+            {
+                window.location.replace('LoginPage.html');
+            });
+        </script>
+    </head>
+</html>

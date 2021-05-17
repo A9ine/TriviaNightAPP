@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Leaderboard</title>
+<style type="text/css">
+ html,
+body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	background: #1A1A1D;
+	font-family: sans-serif;
+	font-weight: 100;
+	color: white;
+	text-align: center;
+}
+
+.container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+table {
+	width: 1100px;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+th {
+	padding: 15px;
+	background-color: #C3073F;
+	color: #fff;
+}
+
+td{
+	padding: 15px;
+	background-color: #6F2232;
+	color: #fff;
+}
+
+th {
+	text-align: left;
+}
+
+thead {
+	th {
+		background-color: #55608f;
+	}
+}
+
+ button{
+	background-color: #950740; 
+  	border: none;
+  	color: white;
+ 	text-align: center;
+  	text-decoration: none;
+  	font-size: 16px;
+  	border: 1px solid black;
+  	padding: 6px 9px;
+}
+
+button:hover{
+	transition-duration: 0.2s;
+	background-color: #C3073F;
+  	color: white;
+}
+
+dialog{
+	background-color: #C3073F;
+}
+
+input {
+	color: white;
+	background-color:#950740;
+}
+ </style>
+<script src="jquery-3.5.1.js"></script>
+<script type="text/javascript">
+	function loadTeamRanking(){
+		$.get("loadTeam", function(result, status){
+			var q=1
+			console.log(result.data)		
+			var  team = result.data[0]
+			var score = result.data[1]
+			for(i=team.length-1;i>=0;i--)
+			{
+				console.log(result.data[i])
+				$('#tbl').append("<tr><td>"+q+"</td><td>"+team[i]+"</td><td>"+score[i]+"</td></tr>");
+				q++
+			}
+			$.post("Validation")
+		});
+	}
+</script>
+</head>
+<body onload="loadTeamRanking()">
+<br><br><br>
+	<h1>Final Rankings:</h1>
+	<br><br><br><br><br><br><br><br><br>
+	<div id="userListDiv">
+		<table id="tbl" border="1" align="center">
+		<thead>
+		<th>Ranking</th>
+		<th>Team</th>
+		<th>Points</th>
+		</thead>
+		</table>
+	</div>
+</body>
+</html>

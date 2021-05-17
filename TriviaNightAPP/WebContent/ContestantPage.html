@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<style type="text/css">
+ html,
+body {
+	height: 100%;
+	color: white;
+}
+body {
+	margin: 0;
+	background: #1A1A1D;
+	font-family: sans-serif;
+	font-weight: 100;
+	text-align: center;
+}
+
+h1{
+	font-size:50px;
+}
+</style>
+<script src="jquery-3.5.1.js"></script>
+<script type="text/javascript">
+function checkQuestion(){
+	setInterval("getCurrentQuestion()",2000)
+	
+}
+	function getCurrentQuestion(){
+		$.get("gameholder", function(result, status){
+			console.log(result)
+			console.log(result.questionID)
+			$("#current_num").text(result.description)
+			if(result.questionID ==1){
+				window.location.assign("comp.html")
+			}
+		});
+	}
+</script>
+<head>
+<meta charset="ISO-8859-1">
+<title>welcome</title>
+</head>
+<body onload="checkQuestion()">
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<h1>Welcome! You are in game!</h1>
+<div id="current_num"></div>
+</body>
+</html>

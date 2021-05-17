@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<style type="text/css">
+ html,
+body {
+	height: 100%;
+	color: white;
+}
+
+body {
+	margin: 0;
+	background: #1A1A1D;
+	font-family: sans-serif;
+	font-weight: 100;
+}
+
+.container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+table {
+	width: 1100px;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+th {
+	padding: 15px;
+	background-color: #C3073F;
+	color: #fff;
+}
+
+td{
+	padding: 15px;
+	background-color: #6F2232;
+	color: #fff;
+}
+
+th {
+	text-align: left;
+}
+
+thead {
+	th {
+		background-color: #55608f;
+	}
+}
+
+ button{
+	background-color: #950740; 
+  	border: none;
+  	color: white;
+ 	text-align: center;
+  	text-decoration: none;
+  	font-size: 16px;
+  	border: 1px solid black;
+}
+
+button:hover{
+	transition-duration: 0.2s;
+	background-color: #C3073F;
+  	color: white;
+}
+
+dialog{
+	background-color: #C3073F;
+}
+
+input {
+	color: white;
+	background-color:#950740;
+}
+ </style>
+<script src="jquery-3.5.1.js"></script>
+<script type="text/javascript">
+	function loadQuestionList() {
+		$.get("Questiondo", function(result, status){
+			var q
+			console.log(result.data)
+			for(i=0; i<result.data.length; i++)
+			{
+				console.log(result.data[i].question)
+				$('#tbl').append("<tr><td>"+result.data[i].questionOrder+"</td><td>"+result.data[i].question+"</td><td>"+result.data[i].answerchoiceA+"</td><td>"+result.data[i].answerchoiceB+"</td><td>"+result.data[i].answerchoiceC+"</td><td>"+result.data[i].answerchoiceD+"</td><td>"+result.data[i].timelimit+"</td><td>"+result.data[i].correctAnswer+"</td><td>"+result.data[i].explaination+
+						"</td><td><button onclick=\"showEditDlg('edit','"+result.data[i].questionOrder+"','"+result.data[i].question+"','"+result.data[i].answerchoiceA+"','"+result.data[i].answerchoiceB+"','"+result.data[i].answerchoiceC+"','"+result.data[i].answerchoiceD+"','"+result.data[i].timelimit+"','"+result.data[i].correctAnswer+"','"+result.data[i].explaination+"','"+result.data[i].questionID+"')\">Edit</button>"+"<button onclick=\"deleteQuestion('"+result.data[i].questionID+"')\">X</button>"+"</td></tr>");
+			}
+		});
+	}
+	
+	function showDlg(act) {
+		document.getElementById("act").value = act;
+		document.getElementById("dlg").open = true;
+	}
+	
+	function showEditDlg(act, id, question, choiceA, choiceB, choiceC, choiceD, time, correctAns,explaination,qID) {
+		document.getElementById("act").value=act;
+		document.getElementById("questionOrder").value = id;
+		document.getElementById("description").value=question;
+		document.getElementById("choiceA").value=choiceA;
+		document.getElementById("choiceB").value=choiceB;
+		document.getElementById("choiceC").value=choiceC;
+		document.getElementById("choiceD").value=choiceD;
+		document.getElementById("time").value=time;
+		document.getElementById("correct").value=correctAns;
+		document.getElementById("explain").value=explaination;
+		document.getElementById("questionID").value=qID;
+		document.getElementById("dlg").open = true;
+	}
+	
+	function saveQuestion() {
+		$.post("Questiondo",
+			$("#fm").serialize(),
+			function(data,status) {
+				document.getElementById("dlg").open = false;
+				loadQuestionList();
+			}
+		);
+	}
+	
+	function deleteQuestion(QuestionID) {
+		if(confirm("Are you sure you want to remove this question?")) {
+			$.post("Questiondo",
+					{"questionOrder":QuestionID,
+				"act":"delete"},
+			);
+		}
+		location.reload();
+	}
+	
+	function goBack() {
+		window.location.assign("Welcome.html")
+	}
+	
+</script>
+</head>
+<body onload="loadQuestionList()">
+	<button onclick="goBack()">Go Back</button>
+	<h1>Make sure that order is valid: no repeats and in order</h1>
+	<div id="userListDiv">
+		<table id="tbl" border="1">
+		<thead>
+		<th>Order</th>
+		<th>Question</th>
+		<th>Choice A</th>
+		<th>Choice B</th>
+		<th>Choice C</th>
+		<th>Choice D</th>
+		<th>Time Limit</th>
+		<th>Correct Answer</th>
+		<th>Explaination</th>
+		<th></th>
+		</thead>
+		</table>
+	</div>
+	
+	<dialog id="dlg">
+		<form id="fm">
+			<input type="text" id="act" name="act" readonly="readonly"/> <br>
+			<input type="text" id= "questionOrder" name="questionOrder" placeholder="Order"></input> <br>
+			<input type="text" id="description" name="description" placeholder="description"></input><br>
+			<input type="text" id="choiceA" name="choiceA" placeholder="choice A"></input><br>
+			<input type="text" id="choiceB" name="choiceB" placeholder="Choice B"></input><br>
+			<input type="text" id="choiceC" name="choiceC" placeholder="Choice C"></input><br>
+			<input type="text" id="choiceD" name="choiceD" placeholder="Choice D"></input><br>
+			<input type="text" id="time" name="time" placeholder="time"></input><br>
+			<input type="text" id="correct" name="correctanswer" placeholder="correct Answer"></input><br>
+			<input type="text" id="explain" name="explaination" placeholder="explaination"></input><br>
+			<input type="text" id="questionID" name="id" placeholder="ID" readonly="readonly"></input><br>
+			<button onclick="saveQuestion()">save</button>
+		</form>
+	</dialog>
+</body>
+</html>

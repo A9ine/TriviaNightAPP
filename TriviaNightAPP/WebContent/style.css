@@ -1,0 +1,112 @@
+button {
+  transition-duration: 0.4s;
+  text-align: center;
+}
+
+button
+{
+    text-align: center;
+    border: #1a1a1d;
+}
+
+button:hover {
+  background-color: orchid;
+}
+
+.color1
+{
+    background-color: #6f2232
+}
+
+.color2
+{
+    background-color: #950740;
+}
+
+.color3
+{
+    background-color: #c3073f;
+}
+
+.stack
+{
+    display: block;
+    margin: auto;
+    
+}
+
+.sameline
+{
+    display: inline;
+}
+
+body {
+    background-color: #1a1a1d;
+}
+
+#title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 6rem;
+    color: white;
+}
+
+.titlepagebutton
+{
+    font-size: 2rem;
+    width:27rem;
+    height:9rem;
+}
+
+.verticalspace {
+    margin-bottom:55px
+}
+
+.verticalspace2 {
+    margin-bottom: 45px;
+}
+
+#verticalspacelogin {
+    margin-top: 350px;
+}
+
+.horizontalspace
+{
+    margin-right:80px;
+}
+
+input {
+    color: white;
+    border:10px #1a1a1d;
+    height: 30px;
+    width: 200px;
+
+}
+
+#loginContainer
+{
+    height: 400px;
+    position: relative;
+    text-align: center;
+    border:3px solid green;
+}
+
+#loginButton
+{
+    height: 30px;
+    width: 80px;
+}
+
+.center {
+   text-align: center;
+  }
+
+#verticalspacewelcome {
+    margin-top: 400px;
+}
+
+.welcomepagebutton
+{
+    height: 70px;
+    width: 250px;
+}

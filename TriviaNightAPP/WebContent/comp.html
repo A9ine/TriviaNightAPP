@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<style type="text/css">
+ html,
+body {
+	height: 100%;
+	color: white;
+}
+body {
+	margin: 0;
+	background: #1A1A1D;
+	font-family: sans-serif;
+	font-weight: 100;
+	text-align: center;
+}
+
+h1{
+	font-size:50px;
+}
+
+h2{
+	font-size:30px;
+}
+
+span{
+	font-size: 40px;
+}
+button{
+	padding: 60px 170px;
+}
+
+.divider{
+    width:40px;
+    height:auto;
+    display:inline-block;
+}
+#a{
+	background-color:#C3073F;
+}
+#b{
+	background-color:#6F2232;
+}
+#c{
+	background-color:#950740;
+}
+#d{
+	background-color:#FF69B4;
+}
+#a:hover{
+	background-color:Orange;
+}
+#b:hover{
+	background-color:Orange;
+}
+#c:hover{
+	background-color:Orange;
+}
+#d:hover{
+	background-color:Orange;
+}
+#a[disabled]:hover {
+  background-color:#C3073F;
+}
+#b[disabled]:hover{
+	background-color:#6F2232;
+}
+#c[disabled]:hover{
+	background-color:#950740;
+}
+#d[disabled]:hover{
+	background-color:#FF69B4;
+}
+</style>
+<script src="jquery-3.5.1.js"></script>
+<script type="text/javascript">
+var seconds;
+var q=0;
+var intervalID
+	function checkQuestion(){
+		setInterval("getCurrentQuestion()",1000)
+		
+	}
+	
+	function loadTeam(){
+		$.get("loadTeam",function(result,status){
+			console.log(result)
+		});
+	}
+	
+	function getCurrentQuestion(){
+		$.get("gameholder", function(result, status){
+			console.log(result)
+			console.log(result.questionID)
+			if (result.questionID==0){
+				window.location.replace("end.html")
+			}
+			if(q!=result.questionID){
+				seconds=result.timelimit
+				q++
+				test()
+				$(":button").attr("disabled", false);
+			}
+			$("#current_num").text(result.question)
+			$("#a").text(result.answerchoiceA)
+			$("#b").text(result.answerchoiceB)
+			$("#c").text(result.answerchoiceC)
+			$("#d").text(result.answerchoiceD)
+			if(result.showExplaination==1){
+				$("#explain").text(result.explaination)
+			}
+			else{
+				$("#explain").text("")
+			}
+		});
+	}
+	
+	function addPoints(){
+		console.log("add");
+		$.post("gameholder");
+	}
+	
+		function myMain(id) {
+			$.get("gameholder", function(result, status){
+				console.log(id);
+				  if (id==result.correctAnswer){
+					  addPoints();
+				  }
+				});
+			}
+		
+		
+		function Fuction() {
+			  document.getElementById('answer').disabled = 'disabled';
+			}
+		
+		function disbaleOptions(){
+            alert("your option is submited");
+            $(":button").attr("disabled", true);
+        }
+		
+		function countdown() {
+            console.log(seconds);
+            $("#timer").html(seconds);
+            if (seconds == 0) {
+                $(":button").attr("disabled", true);
+                clearInterval(intervalID);
+                return;
+            }
+            seconds = seconds - 1;
+
+        }; 
+		
+		function test() {
+            intervalID = setInterval(countdown, 1000)
+        }
+</script>
+<head>
+<meta charset="ISO-8859-1">
+<title>welcome</title>
+</head>
+<body onload="checkQuestion();loadTeam();">
+	<div>
+		<br><br>
+		<span id="timer"></span><br>
+		<br><br><br><br>
+		<h1 id="current_num"></h1><br><br><br><br>
+		<button id="a" onclick="myMain(this.id); disbaleOptions()"></button>
+		<div class="divider"></div>
+		<button id="b" onclick="myMain(this.id); disbaleOptions()"></button><br><br><br><br>
+		<button id="c" onclick="myMain(this.id); disbaleOptions()"></button>
+		<div class="divider"></div>
+		<button id="d" onclick="myMain(this.id); disbaleOptions()"></button>
+		<br>
+		<h2 id="explain"></h2>
+	</div>
+</body>
+</html>

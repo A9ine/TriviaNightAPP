@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<style type="text/css">
+ html,
+body {
+	height: 100%;
+	color: white;
+}
+body {
+	margin: 0;
+	background: #1A1A1D;
+	font-family: sans-serif;
+	font-weight: 100;
+	text-align: center;
+}
+
+h1{
+	font-size:50px;
+}
+
+span{
+	font-size: 40px;
+}
+</style>
+<script src="jquery-3.5.1.js"></script>
+<script type="text/javascript">
+	function checkQuestion(){
+		setInterval("getCurrentQuestion()",1000)
+		
+	}
+	
+	function getCurrentQuestion(){
+		$.get("gameholder", function(result, status){
+			console.log(result)
+			console.log(result.questionID)
+			if (result.questionID==0){
+				window.location.replace("results.html");
+			}
+			$("#current_num").text(result.question)
+		});
+	}
+</script>
+<head>
+<meta charset="ISO-8859-1">
+<title>Host</title>
+</head>
+<body onload="checkQuestion();">
+	<br><br><br><br><br><br><br><br>
+	<h1>Question:</h1>
+	<div>
+		<br><br>
+		<span  id="current_num"></span>
+	</div>
+</body>
+</html>
